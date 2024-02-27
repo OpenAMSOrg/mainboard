@@ -111,6 +111,12 @@ git pull
 - [OpenAMS Klipper Configuration](https://github.com/OpenAMSOrg/mainboard)
 - [Instructions for Setting up FPS as a CANBus Bridge](https://www.klipper3d.org/CANBUS.html)
 
+### Limiting Factors
+
+- Users have reported encountering errors related to maximum extrusion during filament changes. This error message, such as "Move exceeds maximum extrusion (2.745mm^2 vs 1.440mm^2)," may appear due to settings in the slicer or firmware configurations.
+- To address this issue, users have experimented with adjusting the `max_extrude_cross_section` configuration option. For instance, one user set `max_extrude_cross_section: 100` under the `[extruder]` section. However, it's essential to verify the impact of such changes and understand their implications on print quality and printer performance.
+- Another limitation relates to maximum extrusion distance. Errors may occur when attempting to extrude filament beyond certain thresholds, as indicated by the "max_extrude_only_distance" setting in the printer.cfg file. Adjustments to this setting, such as setting it to `1001` under `[extruder]`, may alleviate the issue. However, users should ensure proper tuning and calibration to prevent extrusion-related errors.
+
 Follow these instructions carefully to ensure the successful setup of the OAMS configuration for your 3D printer. For any further assistance or troubleshooting, refer to the provided resources or reach out to the OpenAMS community.
 
 
