@@ -2,16 +2,45 @@
 
 ### Introduction
 
-This guide provides step-by-step instructions for setting up the configuration for the OpenAMS custom 3D printer multi-material system named OAMS (Open AMS). OAMS utilizes Klipper firmware for its operation.
+This guide provides step-by-step instructions for setting up the configuration for the OpenAMS (OAMS).
+An OpenAMS is an AMS which electronics have been switched to its mechanicals compatible with Klipper.
+OAMS supports Klipper only.
 
 ### Prerequisites
 
-- Access to the Raspberry Pi connected to your 3D printer.
+- Access to the shell of the Raspberry Pi connected to your 3D printer.
 - Basic understanding of command line usage.
 - Access to the internet for downloading necessary files.
 - Familiarity with 3D printer components and their functionalities.
+- A 3D Printer
+- An extruder / toolhead with a filament bump cutter (such as [Filametrix](https://github.com/sorted01/Filametrix). It is also recommended the extruder is a dual hobbed gear extruder, since loading filament requires the gears to pull on the filament and overcome the spring force of a loaded extruder.  It is critical for any extruder that the path from the PTFE tubing all the way down to the extruder gears is smooth and unimpeded. Any blockage, roughness, or constriction between the PTFE and the top of the extruder gears will cause nothing but problems with the OAMS.
+- A CANBus setup is mandatory; however, the ACE FPS board can be used as a canbus bridge (USB -> CANBus) for Klipper to communicate with the ACE mainboard. Hence, there is no additional cost to setting up CANBus for the printer.  If CANBus is already installed, the ACE FPS board may be operated directly as a CANBus node (instead of a CANBus bridge)
+- It is mandatory you thoroughly familiarize  yourself with Klipper's excellent documentation on [CANBUs](https://www.klipper3d.org/CANBUS.html)
+
+
+### Making the AMS compatible with klipper printers
+
+OAMS uses one (or multiple AMSs) and the following custom components:
+- 1x ACE (Automatic Color Exchange) filament pressure sensor (FPS) board per printer
+- 1x ACE (Automatic Color Exchange) mainboard per AMS installed
+- Printed parts (STLs and CAD are provided)
+- 4mm outer diameter / 2mm inner diameter PTFE tubing to reach between the FPS and the toolhead extruder (4mm ID / 3mm PTFE **must only be used in the filament path ONLY after the toolhead extruder**)
+- Optionally, one might need some of [these spring](https://www.amazon.com/gp/product/B076LRMLLL) to balance the friction in the PTFE tubes when they are very long (300mm bed printers and longer, specially for printers with flying gantries such as a Voron v2.4)
+
+## Principles of operation
+It is important one understand the working principle of the AMS and how it operates in order to tune and troubleshoot any possible problems with the system. Here is an excellent [introduction](https://wiki.bambulab.com/en/x1/manual/intro-ams).
+
+Prime amongst the components, it is the filament pressure sensor (i.e. filament buffer).  The filament pressure sensor (a hall effect sensor) and its spring loaded slide magnet (hereafter referred as FPS) is the most critical of systems to have a properly working OAMS. Without a properly working FPS, the rest of the system will simply not work.
+
+The FPS measures the amount of *compression* in the filament being fed into the toolhead extruder, and makes part of the feedback mechanism to inform the OAMS about how fast to feed the filament to the extruder, maintaining always pressure within a specified range.  The OAMS **cannot operate without this feedback mechanism**.
+
+The FPS also acts as a limiting switch while loading filament onto the toolhead extruder.  Once the filament hits the top of the gears of the toolhead extruder, the pressure on the system increases until the OAMS turns off the follower motor and detects that it is bottomed out. It is important to understand this concept, since if the FPS slide reaches its maximum value before reaching the top of the gears of the toolhead extruder, it will instruct the follower motor in the AMS to stop, and the loading sequence will fail since the extruder will not have the filament available to pull.
+
+Long reverse bowden tubes (collectively referred in this text as bowden tubes) necessarily produce more friction; hence, in order for the FPS to work properly, one must choose the number of springs to use together to get the right amount of pressure in the FPS to balance the friction of the tube.  For example, empirically, a Voron v.24 350mm will need two [spring](https://www.amazon.com/gp/product/B076LRMLLL) to balance the friction from the long PTFE tube.  A RatRig 3D Printer V-Core 500mm might need as many as three springs.
 
 ### Flashing the Boards
+
+There are two boards that will need flashing, the ACE FPS and the ACE mainboard.
 
 #### Setting up the FPS Board
 
@@ -110,6 +139,10 @@ git pull
 
 - [OpenAMS Klipper Configuration](https://github.com/OpenAMSOrg/mainboard)
 - [Instructions for Setting up FPS as a CANBus Bridge](https://www.klipper3d.org/CANBUS.html)
+
+### The conversion
+
+Converting an AMS to an OAMS system involves replacing its mainboard (located under the plastic tray inside the AMS enclosure), and and tuning the FPS, provided you already have an extruder with a filament bump cutter.  Steps are given below, along with pictures on how to make the conversion.
 
 ### Limiting Factors
 
