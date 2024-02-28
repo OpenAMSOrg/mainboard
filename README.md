@@ -3,7 +3,7 @@
 ### Introduction
 
 This guide provides step-by-step instructions for setting up the configuration for the OpenAMS (OAMS).
-An OpenAMS is an AMS which electronics have been switched to its mechanicals compatible with Klipper.
+An OpenAMS is an AMS which electronics have been switched to make its mechanicals compatible with Klipper.
 OAMS supports Klipper only.
 
 ### Prerequisites
