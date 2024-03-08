@@ -159,6 +159,46 @@ This guide will walk you through the steps to set up the startup checks for the 
 At this stage you should already have all the code, oams.cfg, and all of the macros in this
 repository installed.  From mainsail or fluidd you should be able to see both the ACE FPS and the Mainboard.
 
+## Available OAMS commands
+
+Here's a summary of the OAMS commands and their options:
+
+1. **OAMS_LOAD_SPOOL**: Loads a spool of filament.
+   - Options:
+     - `AMS`: Index of the AMS (0 to 3).
+     - `SPOOL`: Index of the spool (0 to 3).
+
+2. **OAMS_START_UNLOAD_SPOOL**: Initiates the unload sequence for the currently loaded spool.
+   - Options: None. This is an internal command and should not be used.  For unloading spools, please use the SAFE_UNLOAD_SPOOL macro instead.
+
+3. **OAMS_CONTINUE_UNLOAD_SPOOL**: Continues the unload sequence for the currently loaded spool.
+   - Options: None.  This is an internal command should not be used. For unloading spools, please use the SAFE_UNLOAD_SPOOL macro instead.
+
+4. **OAMS_LOAD_STATS**: Queries load statistics.
+   - Options: None.
+
+5. **OAMS_CHANGE_CLICKS**: Changes the number of clicks for loading filament.
+   - Options:
+     - `SET`: Number of clicks (integer, minval=0).
+
+6. **OAMS_LOADED**: Resumes loaded state.
+   - Options: None.
+
+7. **OAMS_CHANGE_FILAMENT**: Initiates a filament change.
+   - Options: None.
+
+8. **OAMS_CALIBRATE_CLICKS**: Calibrates the number of clicks needed for loading filament.
+   - Options:
+     - `OAMS_NAME`: Name of the OAMS (e.g., oams1, oams2, etc.).
+
+9. **OAMS_CALIBRATE_HUB_HES**: Calibrates the hub switches.
+   - Options:
+     - `AMS`: Index of the AMS (0 to 3).
+     - `SPOOL`: Index of the spool (0 to 3).
+     - `OAMS_NAME`: Name of the OAMS.
+
+These commands allow for various operations related to filament loading, unloading, calibration, and status querying.
+
 ## Configuration Setup Steps:
 
 1. **Adjust Schmitt Trigger Ranges:**
