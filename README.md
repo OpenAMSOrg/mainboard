@@ -196,6 +196,13 @@ Here's a summary of the OAMS commands and their options:
      - `AMS`: Index of the AMS (0 to 3).
      - `SPOOL`: Index of the spool (0 to 3).
      - `OAMS_NAME`: Name of the OAMS.
+10. **OAMS_SPOOL**: Retrieves information about a specific spool, such as its type, percentage of filament remaining, and number of clicks.
+It can also be used to set the PERCENTAGE remaning when switching or loading new filament, the command following parameters:
+    - **AMS**: Specifies the AMS (Advanced Manufacturing System) index.
+    - **SPOOL**: Specifies the spool index.
+    - **TYPE**: Optional parameter to set the type of spool.
+    - **PERCENTAGE**: Optional parameter to set the percentage of filament remaining.
+    - **CLICKS**: Optional parameter to set the number of clicks.
 
 These commands allow for various operations related to filament loading, unloading, calibration, and status querying.
 
